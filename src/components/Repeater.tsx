@@ -20,7 +20,7 @@ export const TimerContext = createContext({
 });
 
 const Repeater = () => {
-    const [audio, setAudio] = useState(null);
+    const [audio, setAudio] = useState<any>(null);
 
     const [context, setContext] = useState({
         round: 4,
