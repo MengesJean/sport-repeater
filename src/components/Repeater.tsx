@@ -21,7 +21,6 @@ export const TimerContext = createContext({
 
 const Repeater = () => {
     const [audio, setAudio] = useState(null);
-    const [activeAudio, setActiveAudio] = useState(false);
 
     const [context, setContext] = useState({
         round: 4,
@@ -37,7 +36,7 @@ const Repeater = () => {
         if (context.status === "play") {
             if(context.currentStep === "Exercise" && context.currentTime < 0) {
                 setContext(() => {
-                    if(activeAudio && audio) {
+                    if(audio) {
                         audio.play();
                     }
                     return {
@@ -49,7 +48,7 @@ const Repeater = () => {
             }
             if(context.currentStep === "Pause" && context.currentTime < 0) {
                 setContext(() => {
-                    if(activeAudio && audio) {
+                    if(audio) {
                         audio.play();
                     }
                     return {
@@ -61,7 +60,7 @@ const Repeater = () => {
                 })
             }
             if(context.currentRound > context.round) {
-                if(activeAudio && audio) {
+                if(audio) {
                     audio.play();
                 }
                 setContext(() => {
@@ -83,16 +82,24 @@ const Repeater = () => {
         }
     }, [context]);
 
-    useEffect(() => {
-        setAudio(new Audio("sound.mp3"));
-    }, []);
+
+    const handleChangeAudio = () => {
+        if(audio) {
+            setAudio(null);
+        } else {
+            const audio = new Audio("sound.mp3");
+            setAudio(audio);
+        }
+    }
+
+
 
     const startTimer = () => setContext({ ...context, status: "play" });
     const stopTimer = () => setContext({ ...context, status: "pause" });
     const resetTimer = () => setContext({ 
         ...context, 
         status: "pause",
-        currentStatus: "Exercise",
+        currentStep: "Exercise",
         currentRound: 1, // Nombre de rounds
         currentTime: context.exercise
     });
@@ -104,8 +111,8 @@ const Repeater = () => {
             <div className="flex flex-col items-center justify-center h-screen">
                 <Counter/>
                 <Setup/>
-                <Toggle pressed={activeAudio} onClick={() => setActiveAudio(!activeAudio)} className={"mt-3"}>
-                    {activeAudio ? <Volume2/> : <VolumeX/>}
+                <Toggle pressed={!!audio} onClick={handleChangeAudio} className={"mt-3"}>
+                    {!!audio ? <Volume2/> : <VolumeX/>}
                 </Toggle>
             </div>
         </TimerContext.Provider>
