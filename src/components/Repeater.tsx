@@ -37,7 +37,7 @@ const Repeater = () => {
         if (context.status === "play") {
             if(context.currentStep === "Exercise" && context.currentTime < 0) {
                 setContext(() => {
-                    if(activeAudio) {
+                    if(activeAudio && audio) {
                         audio.play();
                     }
                     return {
@@ -49,7 +49,7 @@ const Repeater = () => {
             }
             if(context.currentStep === "Pause" && context.currentTime < 0) {
                 setContext(() => {
-                    if(activeAudio) {
+                    if(activeAudio && audio) {
                         audio.play();
                     }
                     return {
@@ -61,7 +61,7 @@ const Repeater = () => {
                 })
             }
             if(context.currentRound > context.round) {
-                if(activeAudio) {
+                if(activeAudio && audio) {
                     audio.play();
                 }
                 setContext(() => {
