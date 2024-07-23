@@ -88,7 +88,7 @@ const SetupPanel = ({value, onChange, label, style, id, maxRange = 50}: any) => 
         <div className={style}>
             <p>{label}</p>
             <p className={"text-center mb-6 text-6xl font-medium"}>{value}</p>
-            <Slider max={maxRange} defaultValue={[value]} onValueChange={(e) => onChange({[id]: e[0]})}/>
+            <Slider className={"my-12"} max={maxRange} defaultValue={[value]} onValueChange={(e) => onChange({[id]: e[0]})}/>
         </div>
     )
 }

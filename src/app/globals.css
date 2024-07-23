@@ -59,3 +59,7 @@
     --chart-custom: var(--primary);
   }
 }
+
+html, body {
+  overflow-x: hidden;
+}
